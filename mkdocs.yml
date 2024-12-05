@@ -1,4 +1,74 @@
-site_name: My Docs
+site_name: Our Awesome Blog
+site_description: A blogging site built with Material for MkDocs
 site_url: https://sitename.example
 theme:
   name: material
+  custom_dir: overrides
+  palette:
+    # Dark Mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
+      primary: deep orange
+      accent: deep purple
+
+    # Light Mode
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+      primary: blue
+      accent: deep orange
+
+plugins:
+  - search
+  - blog:
+      blog_dir: .
+      archive_date_format: yyyy
+      archive_url_date_format: yyyy
+      categories_allowed:
+        - Tech
+        - Life
+      post_url_format: "{slug}"
+
+  - tags:
+      tags_file: tags.md
+  - rss:
+      match_path: "posts/.*"
+      pretty_print: true
+      date_from_meta:
+        as_creation: date.created
+        as_update: date.updated
+
+  - git-committers:
+      enabled: true
+      repository: james-willett/mkdoc-blog-demo
+      branch: main
+      token: !ENV GH_TOKEN
+  - git-revision-date-localized:
+      type: date
+      fallback_to_build_date: false
+      enable_creation_date: true
+      enabled: true
+
+extra:
+  social:
+    - icon: simple/youtube
+      link: https://youtube.com/@james-willett
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/james-willett
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/TheJamesWillett
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/willettjames/
+
+hooks:
+  - hooks/socialmedia.py
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
